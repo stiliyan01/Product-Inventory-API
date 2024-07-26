@@ -17,16 +17,18 @@ use App\Http\Controllers\API\CategoryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 //Auth 
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
-
+//User routes
 Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('products', ProductController::class)->only('index', 'show');
+    Route::apiResource('categories', CategoryController::class)->only('index', 'show');
+});
+
+//Admin routes
+Route::middleware('auth:sanctum', 'admin')->group(function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('categories', CategoryController::class);
 });
