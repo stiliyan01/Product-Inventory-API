@@ -1,3 +1,5 @@
+php artisan migrate --seed
+
 JSON
 
 {
