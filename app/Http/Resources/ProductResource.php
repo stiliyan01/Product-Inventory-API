@@ -14,6 +14,18 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'type' => 'product',
+            'id' => $this->id,
+            'attributes' => [
+                'name' => $this->name,
+                'description' => $this->when($request->routeIs('products.show'), $this->description),
+                'price' => $this->price,
+                'stock' => $this->stock,
+                'createdAt' => $this->created_at,
+                'updatedAt' => $this->updated_at,
+            ],
+            'relationships' => CategoryResource::collection($this->whenLoaded('categories'))
+        ];
     }
 }
