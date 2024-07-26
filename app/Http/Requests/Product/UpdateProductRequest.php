@@ -11,7 +11,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'data.attributes.name' => ['sometimes', 'string', 'max:255'],
+            'data.attributes.description' => ['sometimes', 'string'],
+            'data.attributes.price' => ['sometimes', 'numeric'],
+            'data.attributes.stock' => ['sometimes', 'integer'],
+            'data.relationships.category.data.id' => ['sometimes', 'integer'],
         ];
     }
 }

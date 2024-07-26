@@ -25,7 +25,10 @@ class ProductResource extends JsonResource
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
-            'relationships' => CategoryResource::collection($this->whenLoaded('categories'))
+            'relationships' =>
+                [
+                    'category' =>
+                    CategoryResource::collection($this->whenLoaded('categories'))]
         ];
     }
 }
